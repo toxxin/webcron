@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+error_reporting ( E_ALL & ~E_NOTICE );
 
 include_once "./class/cron.php";
 include_once "./class/job.php";
@@ -310,24 +312,31 @@ Command:
 
 <?php
 
-$file = './cron.txt';
+$cr = new Cron();
 
 try {
-	$arr = file($file);
 	$i = 1;
 	echo "<table border=\"1\" style=\"width:100%\">";
-	foreach ($arr as $line) {
-		$line = str_replace(' ', '', $line);
-		$line = str_replace("\t", '', $line);
+	
+	foreach ($cr->content as $line) 
+	{	
+		list($minute, $hour, $day, $month, $weekday) = explode("\t", $line);
+
+		$job = new Job();
+		$job->setMinute($minute);
+		$job->setHour($hour);
+		$job->setDay($day);
+		$job->setMonth($month);
+		$job->setWeekday($weekday);
+	
 		if (strlen($line) > 10)
 		{
 			echo "<tr>";
-			echo "<td>";
-			echo $line;
-			echo "</td>";
+			echo "<td>" . $line . "</td>";
 			echo "<td>";
 			echo '<a class="btn btn-danger" href="delete.php?id='.$i++.'">Delete</a>';
 			echo "</td>";
+			echo "<td>" . $job->toEnglish() . "</td>";
 			echo "</tr>";
 		}
 	}
