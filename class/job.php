@@ -48,6 +48,20 @@ class Job
 	{
 		$this->script_file = $s;
 	}
+	
+	
+    	public function toEnglish()
+    	{
+		list($minute, $hour, $day, $month, $weekday, $year) = explode(' ', $this->getExpression());
+	        return
+	            'At minute  : ' . $this->parse($minute) . '<br>' .
+	            'At hour    : ' . $this->parse($hour) . '<br>' .
+	            'At day     : ' . $this->parse($day) . '<br>' .
+	            'At month   : ' . $this->parse($month) . '<br>' .
+	            'At weekday : ' . $this->parse($weekday) . '<br>' .
+	            'At year    : ' . $this->parse($year ?: '*') . '<br>'
+	            ;
+    	}
 
 
 	public function makeJob()
