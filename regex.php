@@ -1,6 +1,6 @@
 <?php
 
-$subject = "08.08.1971";
+$subject = "01.01.1970";
 
 function checkExp($s)
 {
